@@ -75,4 +75,22 @@ public class AccountController {
 
 		return bankingService.findTransactionsByAccountNumber(accountNumber);
 	}
+
+	@GetMapping(path = "/health/{accountNumber}")
+	@ApiOperation(value = "Get account health", notes = "Get account health score and health band by account number")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Success"),
+			@ApiResponse(code = 400, message = "Bad Request"),
+			@ApiResponse(code = 500, message = "Internal Server Error") })
+	public ResponseEntity<Object> getAccountHealth(@PathVariable Long accountNumber) {
+		return bankingService.fetchAccountHealth(accountNumber);
+	}
+
+	@GetMapping(path = "/projection/{accountNumber}/{debitAmount}")
+	@ApiOperation(value = "Get projected balance", notes = "Get projected balance for an account after debit amount")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Success"),
+			@ApiResponse(code = 400, message = "Bad Request"),
+			@ApiResponse(code = 500, message = "Internal Server Error") })
+	public ResponseEntity<Object> getProjectedBalance(@PathVariable Long accountNumber, @PathVariable Double debitAmount) {
+		return bankingService.fetchProjectedBalance(accountNumber, debitAmount);
+	}
 }

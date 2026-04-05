@@ -25,6 +25,7 @@ import com.coding.exercise.bankapp.repository.AccountRepository;
 import com.coding.exercise.bankapp.repository.CustomerAccountXRefRepository;
 import com.coding.exercise.bankapp.repository.CustomerRepository;
 import com.coding.exercise.bankapp.repository.TransactionRepository;
+import com.coding.exercise.bankapp.service.helper.AccountInsightsHelper;
 import com.coding.exercise.bankapp.service.helper.BankingServiceHelper;
 
 @Service
@@ -41,6 +42,8 @@ public class BankingServiceImpl implements BankingService {
     private CustomerAccountXRefRepository custAccXRefRepository;
     @Autowired
     private BankingServiceHelper bankingServiceHelper;
+	@Autowired
+	private AccountInsightsHelper accountInsightsHelper;
 
     public BankingServiceImpl(CustomerRepository repository) {
         this.customerRepository=repository;
@@ -306,6 +309,51 @@ public class BankingServiceImpl implements BankingService {
 		}
 		
 		return transactionDetails;
+	}
+
+	/**
+	 * Get account health details for an account number.
+	 *
+	 * Layers in flow: Controller -> Service -> Service internal method -> Repository ->
+	 * Helper -> Utility.
+	 *
+	 * @param accountNumber
+	 * @return
+	 */
+	public ResponseEntity<Object> fetchAccountHealth(Long accountNumber) {
+		Optional<Account> accountEntityOpt = loadAccountEntity(accountNumber);
+
+		if (accountEntityOpt.isPresent()) {
+			return ResponseEntity.status(HttpStatus.OK)
+					.body(accountInsightsHelper.createHealthDetails(accountEntityOpt.get()));
+		}
+
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Account Number " + accountNumber + " not found.");
+	}
+
+	/**
+	 * Get projected balance for an account after a debit amount.
+	 *
+	 * @param accountNumber
+	 * @param debitAmount
+	 * @return
+	 */
+	public ResponseEntity<Object> fetchProjectedBalance(Long accountNumber, Double debitAmount) {
+		if (debitAmount == null || debitAmount < 0) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Debit amount must be greater than or equal to zero.");
+		}
+
+		Optional<Account> accountEntityOpt = loadAccountEntity(accountNumber);
+		if (accountEntityOpt.isPresent()) {
+			return ResponseEntity.status(HttpStatus.OK)
+					.body(accountInsightsHelper.createProjectionDetails(accountEntityOpt.get(), debitAmount));
+		}
+
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Account Number " + accountNumber + " not found.");
+	}
+
+	private Optional<Account> loadAccountEntity(Long accountNumber) {
+		return accountRepository.findByAccountNumber(accountNumber);
 	}
 
 

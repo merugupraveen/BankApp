@@ -28,5 +28,9 @@ public interface BankingService {
     public ResponseEntity<Object> transferDetails(TransferDetails transferDetails, Long customerNumber);
     
     public List<TransactionDetails> findTransactionsByAccountNumber(Long accountNumber);
+
+    public ResponseEntity<Object> fetchAccountHealth(Long accountNumber);
+
+    public ResponseEntity<Object> fetchProjectedBalance(Long accountNumber, Double debitAmount);
     
 }
