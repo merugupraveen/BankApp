@@ -33,6 +33,10 @@ public class BankingServiceHelper {
 				.customerAddress(convertToAddressDomain(customer.getCustomerAddress()))
 				.build();
 	}
+
+	public String getName(){
+		return "HDFC";
+	}
 	
 	public Customer convertToCustomerEntity(CustomerDetails customerDetails) {
 		
