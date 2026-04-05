@@ -46,7 +46,7 @@ public class AccountInsightsUtil {
 
 	private Double sanitizeAmount(Double amount) {
 		if (amount == null || amount < 0) {
-			return 0.0;
+			return 1.0;
 		}
 		return amount;
 	}
