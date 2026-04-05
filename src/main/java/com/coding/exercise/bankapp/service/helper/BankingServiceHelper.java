@@ -50,6 +50,9 @@ public class BankingServiceHelper {
 
 	public AccountInformation convertToAccountDomain(Account account) {
 
+		if(account == null) {
+			throw new IllegalArgumentException("Account cannot be null");
+		}
 		return AccountInformation.builder()
 				.accountType(account.getAccountType())
 				.accountBalance(account.getAccountBalance())
