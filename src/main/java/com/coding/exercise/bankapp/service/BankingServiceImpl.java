@@ -83,7 +83,7 @@ public class BankingServiceImpl implements BankingService {
 	 */
     
 	public CustomerDetails findByCustomerNumber(Long customerNumber) {
-		
+		bankingServiceHelper.getName();
 		Optional<Customer> customerEntityOpt = customerRepository.findByCustomerNumber(customerNumber);
 
 		if(customerEntityOpt.isPresent())
@@ -100,6 +100,7 @@ public class BankingServiceImpl implements BankingService {
 	 * @return
 	 */
 	public ResponseEntity<Object> updateCustomer(CustomerDetails customerDetails, Long customerNumber) {
+		bankingServiceHelper.getName();
 		Optional<Customer> managedCustomerEntityOpt = customerRepository.findByCustomerNumber(customerNumber);
 		Customer unmanagedCustomerEntity = bankingServiceHelper.convertToCustomerEntity(customerDetails);
 		if(managedCustomerEntityOpt.isPresent()) {
