@@ -17,6 +17,7 @@ public class AccountInsightsHelper {
 	private AccountInsightsUtil accountInsightsUtil;
 
 	public AccountHealthDetails createHealthDetails(Account account) {
+        
 		Double currentBalance = defaultZero(account.getAccountBalance());
 		int healthScore = accountInsightsUtil.calculateHealthScore(currentBalance);
 
