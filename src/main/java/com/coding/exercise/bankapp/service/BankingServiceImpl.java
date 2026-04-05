@@ -174,13 +174,8 @@ public class BankingServiceImpl implements BankingService {
 	 */
 	public ResponseEntity<Object> findByAccountNumber(Long accountNumber) {
 		
-		if(accountNumber == null) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Account Number cannot be null.");
-		}
 
 		Optional<Account> accountEntityOpt = accountRepository.findByAccountNumber(accountNumber);
-
-
 
 		if(accountEntityOpt.isPresent()) {
 			return ResponseEntity.status(HttpStatus.FOUND).body(bankingServiceHelper.convertToAccountDomain(accountEntityOpt.get()));
