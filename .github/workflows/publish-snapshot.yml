@@ -33,6 +33,7 @@ jobs:
           </settings>" > $HOME/.m2/settings.xml
 
       - name: Publish Snapshot to GitHub Packages
-        run: mvn deploy -X -DskipTests=true -Drevision=1.0.0-SNAPSHOT
+        # run: mvn deploy -X -DskipTests=true -Drevision=1.0.0-SNAPSHOT
+        run: mvn deploy -DaltDeploymentRepository=github::default::https://maven.pkg.github.com/merugupraveen/BankApp
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
