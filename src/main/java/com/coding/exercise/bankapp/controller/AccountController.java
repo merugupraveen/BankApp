@@ -49,7 +49,10 @@ public class AccountController {
 
 	public ResponseEntity<Object> addNewAccount(@RequestBody AccountInformation accountInformation,
 			@PathVariable Long customerNumber) {
-
+				
+		if(accountInformation.getAccountType().toUpperCase().equals("SAVINGS") && accountInformation.getAccountBalance() < 100) {
+			return ResponseEntity.badRequest().body("Minimum initial deposit for savings account is $100.");
+		}
 		return bankingService.addNewAccount(accountInformation, customerNumber);
 	}
 
