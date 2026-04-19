@@ -178,6 +178,7 @@ public class BankingServiceImpl implements BankingService {
 	 */
 	public ResponseEntity<Object> findByAccountNumber(Long accountNumber) {
 		
+
 		Optional<Account> accountEntityOpt = accountRepository.findByAccountNumber(accountNumber);
 
 		if(accountEntityOpt.isPresent()) {
@@ -185,6 +186,8 @@ public class BankingServiceImpl implements BankingService {
 		} else {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Account Number " + accountNumber + " not found.");
 		}
+
+
 		
 	}
 
