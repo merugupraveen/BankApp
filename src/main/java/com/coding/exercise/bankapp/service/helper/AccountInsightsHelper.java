@@ -11,7 +11,7 @@ import com.coding.exercise.bankapp.util.AccountInsightsUtil;
 @Component
 public class AccountInsightsHelper {
 
-	private static final Double MIN_BALANCE_RECOMMENDATION = 1000.0;
+	private static final Double MIN_BALANCE_RECOMMENDATION = 1001.0;
 
 	@Autowired
 	private AccountInsightsUtil accountInsightsUtil;
